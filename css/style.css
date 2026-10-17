@@ -43,6 +43,10 @@ a:hover { color: var(--kaki); text-decoration-color: var(--kaki); }
 .fs-toggle, .menu-toggle { font: inherit; font-size: .8rem; background: transparent; border: 1px solid var(--ink); color: var(--ink); border-radius: 999px; padding: .3rem .9rem; cursor: pointer; white-space: nowrap; }
 .fs-toggle[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .menu-toggle { display: none; }
+.hsearch { display: flex; flex: 0 1 17rem; min-width: 0; margin-left: auto; }
+.hsearch input { flex: 1; min-width: 0; font: inherit; font-size: .88rem; padding: .35rem .8rem; border: 1px solid var(--line); border-right: 0; border-radius: 999px 0 0 999px; background: #fff; color: var(--ink); }
+.hsearch button { font: inherit; font-size: .85rem; padding: .35rem .85rem; border: 1px solid var(--green); background: var(--green); color: #fff; border-radius: 0 999px 999px 0; cursor: pointer; white-space: nowrap; }
+.hsearch button:hover { background: var(--kaki); border-color: var(--kaki); }
 .gnav ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; margin: 0 auto; padding-top: 0; padding-bottom: .4rem; }
 .gnav li + li::before { content: "・"; color: #D7C7AE; margin: 0 .15rem; }
 .gnav a { text-decoration: none; font-size: .92rem; padding: .3rem .45rem; color: var(--ink); }
@@ -110,6 +114,23 @@ main:focus { outline: none; }
 .form-open a { display: inline-block; padding: .8rem 1.8rem; border-radius: 999px; background: var(--green); color: #fff; font-weight: 700; font-size: 1.05rem; text-decoration: none; }
 .form-open a::after { content: " →"; }
 .form-open a:hover { background: var(--kaki); color: #fff; }
+.form-apply { margin-top: 2.4rem; }
+.form-apply .form-open + .form-open { margin-top: -.2rem; }
+.print-url { display: none; }
+/* サイト内の検索 */
+.search-form label { display: block; font-weight: 700; margin-bottom: .4rem; }
+.search-row { display: flex; gap: .5rem; }
+.search-row input { flex: 1; min-width: 0; font: inherit; font-size: 1.05rem; padding: .6rem .9rem; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); }
+.search-row button { font: inherit; font-weight: 700; padding: .6rem 1.4rem; border: 0; border-radius: 10px; background: var(--green); color: #fff; cursor: pointer; }
+.search-row button:hover { background: var(--kaki); }
+.search-hint { font-size: .85rem; color: var(--soft); margin: .5rem 0 0; }
+.search-count { margin: 2rem 0 1rem; font-weight: 700; }
+.search-results { list-style: none; padding: 0; margin: 0; }
+.search-results li { padding: 1rem 0; border-bottom: 1px dashed var(--line); }
+.search-results .r-title { margin: 0; font-size: 1.05rem; font-weight: 700; }
+.search-results .r-date { display: block; font-size: .78rem; font-weight: 400; color: var(--soft); }
+.search-results .r-text { margin: .4rem 0 0; font-size: .9rem; color: var(--soft); }
+.search-results mark { background: var(--kaki-pale); color: var(--ink); padding: 0 .1em; }
 
 /* PDF・Excel へのリンク */
 .content a.file::before, ul.attach li::before {
@@ -225,6 +246,8 @@ ul.attach li { background: var(--paper); border: 1px solid var(--line); border-r
   .tel-label { display: none; }
   .fs-toggle, .menu-toggle { font-size: .78rem; padding: .25rem .65rem; }
   .menu-toggle { display: inline-block; }
+  .hsearch { order: 3; flex: 1 1 100%; margin: .2rem 0 0; }
+  .hsearch input { font-size: 1rem; padding: .45rem .9rem; }
   .gnav { display: none; } .gnav.open { display: block; }
   .gnav ul { flex-direction: column; align-items: stretch; }
   .gnav li + li::before { content: none; }
@@ -246,7 +269,36 @@ ul.attach li { background: var(--paper); border: 1px solid var(--line); border-r
   .foot-in { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* 印刷したとき：飾りやメニューを外し、本文と連絡先を読みやすく（ご家族が印刷して渡すことを考えて） */
 @media print {
-  .site-header .header-tools, .gnav, .side, .preview-bar, .site-footer .foot-links { display: none; }
-  body { background: #fff; }
+  @page { margin: 15mm 14mm; }
+  .skip, .preview-bar, .site-header .header-tools, .hsearch, .gnav, .crumbs, .side, .toc, .tabs, .back, .more,
+  .site-footer .foot-links, .site-footer .copy, .search-form, .form-note { display: none !important; }
+  html, body { background: #fff !important; color: #000; }
+  body { font-size: 11.5pt; line-height: 1.75; }
+  .site-header { border: 0; }
+  .header-in { padding: 0 0 4mm; }
+  .brand img { width: 60mm; mix-blend-mode: normal; }
+  .page { display: block; }
+  .wrap { max-width: none; padding: 0; }
+  a { color: #000; }
+  .content h1 { font-size: 17pt; margin-top: 0; }
+  .content h2 { background: none; border-bottom: 1.5pt solid #000; border-radius: 0; padding: 0 0 1mm; margin-top: 7mm; font-size: 13pt; }
+  .content h2::before { display: none; }
+  .content h3 { border-left-color: #000; }
+  h1, h2, h3 { break-after: avoid; }
+  table, figure, img, .form-card, li { break-inside: avoid; }
+  img { max-width: 100% !important; }
+  /* 外へのリンクは、紙でもたどれるようにアドレスを添える */
+  .content a[href^="http"]::after { content: "（" attr(href) "）"; font-size: 8.5pt; word-break: break-all; }
+  .form-card { border: 1pt solid #000; background: none; padding: 3mm 4mm; }
+  .form-card p { margin: 0; }
+  .form-open a { background: none !important; color: #000 !important; padding: 0; font-size: 11.5pt; }
+  .form-open a::after { content: "（" attr(href) "）" !important; font-size: 8.5pt; font-weight: 400; word-break: break-all; }
+  .print-url { display: block; margin-top: 8mm; font-size: 9pt; color: #333; word-break: break-all; }
+  .site-footer { background: none !important; color: #000 !important; border-top: 1pt solid #000; margin-top: 6mm; padding: 4mm 0 0; }
+  .site-footer a, .site-footer p { color: #000 !important; }
+  .foot-in { display: block; padding: 0; }
+  .site-footer, .foot-org { break-inside: avoid; }
+  .hero .art, .card .pic, .banner-list { display: none; }
 }
