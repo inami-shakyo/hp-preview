@@ -26,7 +26,8 @@ a:hover { color: var(--kaki); text-decoration-color: var(--kaki); }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: -999px; top: 0; background: var(--paper); padding: .5rem 1rem; z-index: 10; }
 .skip:focus { left: 1rem; }
-.phrase { word-break: keep-all; overflow-wrap: anywhere; }   /* 言葉の切れ目（<wbr>）でだけ折り返す */
+.phrase { text-wrap: balance; }
+.phrase .ph { white-space: nowrap; }   /* 語のまとまりの途中では折り返さない（まとまりの間でだけ折り返す） */   /* 言葉の切れ目（<wbr>）でだけ折り返す */
 
 .preview-bar { background: var(--ink); color: #FBEFDD; text-align: center; font-size: .82rem; padding: .35rem 16px; }
 .alert-bar { background: var(--rose); color: #fff; font-weight: 700; text-align: center; padding: .6rem 16px; line-height: 1.6; }
