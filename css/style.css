@@ -138,6 +138,14 @@ main:focus { outline: none; }
 .form-apply { margin-top: 2.4rem; }
 .form-apply .form-open + .form-open { margin-top: -.2rem; }
 .print-url { display: none; }
+/* 地図（本文の「［地図］住所」から作る） */
+.map { margin: 1rem 0 2rem; }
+.map iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+.map figcaption { margin-top: .6rem; }
+.map-q { display: none; }
+.map-open { display: inline-block; padding: .5rem 1.2rem; border-radius: 999px; border: 1px solid var(--green); color: var(--green); font-weight: 700; font-size: .92rem; text-decoration: none; }
+.map-open::after { content: " →"; }
+.map-open:hover { background: var(--green); color: #fff; }
 /* サイト内の検索 */
 .search-form label { display: block; font-weight: 700; margin-bottom: .4rem; }
 .search-row { display: flex; gap: .5rem; }
@@ -298,6 +306,7 @@ ul.attach li { background: var(--paper); border: 1px solid var(--line); border-r
   .content h2 { font-size: 1.12rem; margin-top: 3rem; padding: .5rem .8rem .5rem 1.9rem; }
   .media > figure { float: none; max-width: 100%; margin: 0 0 1rem; }
   .toc ul { columns: 1; }
+  .map iframe { aspect-ratio: 4 / 3; }
   .hero { padding-top: 2.4rem; }
   .hero .label { font-size: 1.1rem; }
   .cards { grid-template-columns: minmax(0, 1fr); gap: 2.4rem; }
@@ -345,4 +354,6 @@ ul.attach li { background: var(--paper); border: 1px solid var(--line); border-r
   .hero .art, .card .pic, .banner-list { display: none; }
   .rv { opacity: 1 !important; transform: none !important; }
   .petals { display: none !important; }
+  .map iframe { display: none; }
+  .map-q { display: block; font-weight: 700; }
 }
