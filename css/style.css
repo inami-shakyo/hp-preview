@@ -140,6 +140,8 @@ main:focus { outline: none; }
 .print-url { display: none; }
 /* 地図（本文の「［地図］住所」から作る） */
 .map { margin: 1rem 0 2rem; }
+/* 地図のあとに続く案内は別の場所なので、余白と点線で区切る */
+.content .map + * { margin-top: 3rem; padding-top: 2.4rem; border-top: 2px dashed var(--line); }
 .map iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
 .map figcaption { margin-top: .6rem; }
 .map-q { display: none; }
