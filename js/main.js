@@ -2,6 +2,24 @@
 (function () {
   var root = document.documentElement;
 
+  // ふわっと出てくる動き：トップの見出し・カード・ご案内・お知らせ・関係機関を、画面に入ったものから順に出す
+  // （隠す印 .rv はこの処理が付けるので、この処理が動かなければ最初から全部見えている）
+  if (root.classList.contains('motion')) {
+    var groups = ['.sec', '.cards > *', '.igrid > *', '#home-news > li', '.banner-list > li'];
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('shown'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    groups.forEach(function (sel) {
+      document.querySelectorAll(sel).forEach(function (el, i) {
+        el.classList.add('rv');
+        el.style.transitionDelay = Math.min(i, 6) * 0.08 + 's'; // 並んでいるものは少しずつずらして出す
+        io.observe(el);
+      });
+    });
+  }
+
   // スマホのメニュー
   var menuBtn = document.querySelector('.menu-toggle');
   var nav = document.getElementById('gnav');

@@ -69,6 +69,27 @@ main:focus { outline: none; }
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 10'%3E%3Cpath d='M2 6 C 10 1, 18 9, 26 5 S 42 1, 50 5 S 64 9, 70 4' fill='none' stroke='%23A9532F' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
+/* 動き：ふわっと出る（.rv は main.js が付ける）・波線を描く・さわったときの反応。
+   「動きを減らす」設定の人には early.js が .motion を付けないので、どれも動かない */
+.motion .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.motion .rv.shown { opacity: 1; transform: none; }
+.motion .content h1::after { animation: draw-line .9s .25s ease-out both; }
+.motion .sec.rv::after { clip-path: inset(0 100% 0 0); transition: clip-path .9s .35s ease-out; }
+.motion .sec.rv.shown::after { clip-path: inset(0 0 0 0); }
+@keyframes draw-line { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.motion .hero .lead, .motion .hero .art { animation: hero-in .9s ease-out both; }
+.motion .hero .art { animation-delay: .15s; }
+@keyframes hero-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .issue, .banner-list a, .form-open a, .search-row button, .hsearch button { transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease; }
+  .issue:hover, .banner-list a:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(59, 52, 46, .12); border-color: var(--kaki); }
+  .form-open a:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(59, 52, 46, .18); }
+  .card .pic img { transition: transform .3s ease; }
+  .card:hover .pic img { transform: translateY(-6px) scale(1.03); }
+  .more::after { display: inline-block; transition: transform .2s ease; }
+  .more:hover::after { transform: translateX(4px); }
+}
+
 /* 横のメニュー */
 .side-block { margin-bottom: 1.6rem; }
 .side-block h2 { margin: 0 0 .4rem; font-family: var(--hand); font-weight: 500; font-size: 1.05rem; letter-spacing: .08em; padding-bottom: .4rem; border-bottom: 2px solid var(--kaki); }
@@ -181,7 +202,6 @@ ul.attach li { background: var(--paper); border: 1px solid var(--line); border-r
 .card .pic img { display: block; width: 100%; transition: transform .25s;
   -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 71%);
           mask-image: radial-gradient(circle at 50% 50%, #000 52%, transparent 71%); }
-.card .pic:hover img { transform: translateY(-4px); }
 .card h3 { margin: 0; font-family: var(--hand); font-weight: 500; font-size: 1.35rem; letter-spacing: .08em; }
 .card h3 a { text-decoration: none; }
 .card .cl { margin: .2rem 0 .9rem; font-size: .86rem; color: var(--soft); line-height: 1.7; }
@@ -301,4 +321,5 @@ ul.attach li { background: var(--paper); border: 1px solid var(--line); border-r
   .foot-in { display: block; padding: 0; }
   .site-footer, .foot-org { break-inside: avoid; }
   .hero .art, .card .pic, .banner-list { display: none; }
+  .rv { opacity: 1 !important; transform: none !important; }
 }
