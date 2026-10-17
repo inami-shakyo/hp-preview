@@ -104,11 +104,12 @@ main:focus { outline: none; }
 .toc ul { margin: 0; padding-left: 1.2rem; columns: 2; column-gap: 2rem; }
 .toc li { break-inside: avoid; }
 .toc li::marker { color: var(--green); }
-.form-open { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; }
-.form-open a { display: inline-block; padding: .55rem 1.2rem; border-radius: 999px; background: var(--green); color: #fff; font-weight: 700; text-decoration: none; }
+.form-card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 1.2rem 1.4rem; }
+.form-card p { margin: 0 0 .8rem; }
+.form-card .form-note { margin: 0; font-size: .9rem; color: var(--soft); }
+.form-open a { display: inline-block; padding: .8rem 1.8rem; border-radius: 999px; background: var(--green); color: #fff; font-weight: 700; font-size: 1.05rem; text-decoration: none; }
+.form-open a::after { content: " →"; }
 .form-open a:hover { background: var(--kaki); color: #fff; }
-.form-open span { font-size: .85rem; color: var(--soft); }
-.form-embed iframe { display: block; width: 100%; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
 
 /* PDF・Excel へのリンク */
 .content a.file::before, ul.attach li::before {
