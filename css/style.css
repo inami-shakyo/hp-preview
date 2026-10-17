@@ -138,6 +138,7 @@ main:focus { outline: none; }
 .form-apply { margin-top: 2.4rem; }
 .form-apply .form-open + .form-open { margin-top: -.2rem; }
 .print-url { display: none; }
+.nw { white-space: nowrap; }  /* 電話番号などを途中で折り返さない */
 /* 地図（本文の「［地図］住所」から作る） */
 .map { margin: 1rem 0 2rem; }
 /* 地図のあとに続く案内は別の場所なので、余白と点線で区切る */
